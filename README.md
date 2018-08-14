@@ -17,10 +17,12 @@ This application combines both the functionality of Node.js and mySQL Workbench 
 
 Fork the repo and download the files to your computer. You will also need to create your own mySQL database file and connect the database to the JavaScript files located in the repo. Create the necessary npm packages and run the following in the bash/terminal:
 
-- npm init -y
-- npm i
-- npm i mysql
-- npm i inquirer
+```
+npm init -y
+npm i
+npm i mysql
+npm i inquirer
+```
 
 Check to make sure the parameters that you have created in your SQL database are the same as those included or the application will not run properly.
 
