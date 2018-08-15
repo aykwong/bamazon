@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    passowrd: "password",
+    password: "password",
     database: "bamazon"
 });
 
@@ -25,20 +25,16 @@ function managerOptions() {
         .then(function (answers) {
             switch (answers.action) {
                 case "View Products for Sale":
-                    viewProducts();
-                    break;
+                    return viewProducts();
 
                 case "View Low Inventory":
-                    lowInventory();
-                    break;
+                    return lowInventory();
 
                 case "Add to Inventory":
-                    addInventory();
-                    break;
+                    return addInventory();
 
                 case "Add New Products":
-                    newProducts();
-                    break;
+                    return newProducts();
             }
         })
 }
@@ -50,7 +46,7 @@ function viewProducts() {
         if (err) throw err;
 
         for (let i = 0; i < res.length; i++) {
-            console.log(`\nID: ${res[i].item_id}\n`, `Name: ${res[i].product_name}\n`, `Department: ${res[i].department_name}\n`, `Price: $${res[i].price}`);
+            console.log(`\nID: ${res[i].item_id}\n`, `Name: ${res[i].product_name}\n`, `Department: ${res[i].department_name}\n`, `Price: $${res[i].price}\n`, `Stock: ${res[i].stock_quantity}`);
         }
         console.log(`\n-------------------`);
         connection.end();
@@ -64,7 +60,9 @@ function lowInventory() {
         if (err) throw err;
 
         for (let i = 0; i < res.length; i++) {
-            console.log(`\nID: ${res[i].item_id}\n`, `Name: ${res[i].product_name}\n`, `Department: ${res[i].department_name}\n`, `Price: $${res[i].price}`);
+            if (res[i].stock_quantity < 5) {
+                console.log(`\nID: ${res[i].item_id}\n`, `Name: ${res[i].product_name}\n`, `Department: ${res[i].department_name}\n`, `Price: $${res[i].price}\n`, `Stock: ${res[i].stock_quantity}`);
+            }
         }
         console.log(`\n-------------------`);
         connection.end();
@@ -81,10 +79,10 @@ function addInventory() {
             console.log(`\nID: ${res[i].item_id}\n`, `Name: ${res[i].product_name}`);
         }
         console.log(`\n-------------------`);
-        orderForm();
+        orderForm(res);
     })
 
-    function orderForm() {
+    function orderForm(res) {
         inquirer.prompt([
             {
                 name: "item",
@@ -105,7 +103,7 @@ function addInventory() {
         ])
             .then(function (answers) {
                 console.log(`\n-------------------`);
-                let stock = res[answers.item - 1].stock_quantity + answers.amount;
+                let stock = parseInt(res[parseInt(answers.item) - 1].stock_quantity) + parseInt(answers.amount);
                 let query = `UPDATE products SET stock_quantity = ${stock} WHERE item_id = ${answers.item}`;
 
                 connection.query(query, function (err, res) {
@@ -146,8 +144,14 @@ function newProducts() {
             message: "Are you sure everything is correct?"
         }
     ])
-    // .then(function(answers) {
+    .then(function(answers) {
+        var query = `INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES ('${answers.name}', '${answers.department}', ${answers.price}, ${answers.amount});`;
 
-    // })
-    connection.end();
+        connection.query(query, function(err, res) {
+            if (err) throw err;
+
+            console.log("You have successfully added the product!");
+        })
+        connection.end();
+    })
 }
