@@ -61,7 +61,7 @@ function customerOrder() {
     ])
         .then(function (answers) {
             console.log(`\n-------------------`);
-            let query = `SELECT price, stock_quantity FROM products WHERE item_id = ${answers.purchase}`;
+            let query = `SELECT price, stock_quantity, product_sales FROM products WHERE item_id = ${answers.purchase}`;
 
             connection.query(query, function (err, res) {
                 if (err) throw err;
@@ -70,13 +70,14 @@ function customerOrder() {
                     console.log('Insufficient quantity!');
                 } else {
                     let stock = res[0].stock_quantity - answers.amount;
-                    let query = `UPDATE products SET stock_quantity = ${stock} WHERE item_id = ${answers.purchase}`;
+                    let totalCost = res[0].price * answers.amount;
+                    let revenue = res[0].product_sales + totalCost;
+                    let query = `UPDATE products SET stock_quantity = ${stock}, product_sales = ${revenue} WHERE item_id = ${answers.purchase}`;
 
                     connection.query(query, function (err, res) {
                         if (err) throw err;
                     })
 
-                    let totalCost = res[0].price * answers.amount;
                     console.log(`You have successfully made your purchase! The total cost is $${totalCost}.`);
                 }
                 connection.end();
