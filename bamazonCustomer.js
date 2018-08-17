@@ -78,7 +78,7 @@ function customerOrder() {
                         if (err) throw err;
                     })
 
-                    console.log(`You have successfully made your purchase! The total cost is $${totalCost}.`);
+                    console.log(`You have successfully made your purchase! The total cost is $${parseFloat(totalCost).toFixed(2)}.`);
                 }
                 connection.end();
             })

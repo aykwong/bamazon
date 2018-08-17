@@ -19,6 +19,7 @@ function managerOptions() {
         {
             name: "action",
             type: "list",
+            message: "What would you like to do?",
             choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Products"]
         }
     ])
@@ -54,7 +55,7 @@ function viewProducts() {
 }
 
 function lowInventory() {
-    let query = "SELECT * FROM products GROUP BY stock_quantity HAVING count(*) < 5";
+    let query = "SELECT * FROM products";
 
     connection.query(query, function (err, res) {
         if (err) throw err;
