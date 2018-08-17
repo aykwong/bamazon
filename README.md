@@ -8,10 +8,15 @@ This application combines both the functionality of Node.js and mySQL Workbench 
    * List a set of menu options:
       - View Products for Sale
       - View Low Inventory
-     - Add to Inventory
+      - Add to Inventory
       - Add New Product
   
   Depending on the action the manager takes, they are able to view, alter, restock, or add items to the store for the customer to purchase. The changes will also reflect on the MySQL Workbench database.
+  
+3. The supervisor can manage the departments and look at profits.
+   * List of menu options:
+      - View Product Sales by Department
+      - Create New Department
 
 ## Getting Started
 
@@ -22,6 +27,7 @@ npm init -y
 npm i
 npm i mysql
 npm i inquirer
+npm i console.table
 ```
 
 Check to make sure the parameters that you have created in your SQL database are the same as those included or the application will not run properly.
@@ -30,6 +36,7 @@ You can run the applications using node like so:
 
     node bamazonCustomer.js
     node bamazonManager.js
+    node bamazonSupervisor.js
 
 ### Prerequisites
 
@@ -44,6 +51,7 @@ You can run the applications using node like so:
 * [Node.js]
 * [NPM MySQL]
 * [NPM Inquirer]
+* [NPM Console.Table]
 * [MySQL Workbench]
 
 ## Authors
