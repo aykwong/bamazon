@@ -47,7 +47,7 @@ You can run the applications using node like so:
 
 ## Built With
 
-* [Javscript]
+* [JavaScript]
 * [Node.js]
 * [NPM MySQL]
 * [NPM Inquirer]
