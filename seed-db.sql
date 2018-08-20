@@ -12,5 +12,11 @@ VALUES ('Nature Valley Chocolate Granola', 'Food', 2.49, 10), ('Kelloggs Frosted
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ('Samsung Galaxy S8', 'Cell Phones', 699.99, 8), ('iPhone X', 'Cell Phones', 1039.99, 10), ('Pixel 2 XL', 'Cell Phones', 999.99, 2);
 
-SELECT *
+INSERT INTO departments(department_name, over_head_costs)
+VALUES ("Electronics", 50), ("Books", 20), ("Food", 5), ("Cell Phones", 80);
+
+select *
 FROM products;
+
+select * 
+FROM departments;
